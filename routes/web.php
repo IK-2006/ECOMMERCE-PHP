@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureTeamMembership;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\FornecedorController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -19,10 +20,17 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('invitations/{invitation}/accept', 'pages::teams.accept-invitation')->name('invitations.accept');
 });
 
-// Route::get('/categoria', function () {
-//     return redirect()->route('categorias.index');
-// });
+ Route::get('/categoria', function () {
+     return redirect()->route('categoria.index');
+ });
 
-Route::resource('categorias', CategoriaController::class);
+Route::resource('categoria', CategoriaController::class);
+
+
+ Route::get('/fornecedor', function () {
+     return redirect()->route('fornecedor.index');
+ });
+
+Route::resource('fornecedor', FornecedorController::class);
 
 require __DIR__.'/settings.php';

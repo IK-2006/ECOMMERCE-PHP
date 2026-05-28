@@ -12,4 +12,4 @@
 
 
 <button type="submit" class="btn">{{ $buttonText ?? 'Salvar' }}</button>
-<a href="{{ route('categorias.index') }}" style="margin-left: 8px;">Cancelar</a>
+<a href="{{ route('categoria.index') }}" style="margin-left: 8px;">Cancelar</a>

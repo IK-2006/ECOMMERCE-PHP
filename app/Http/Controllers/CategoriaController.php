@@ -9,16 +9,16 @@ class CategoriaController extends Controller
 {
     public function index()
     {
-        $categorias = Categoria::query()
+        $categoria = Categoria::query()
             ->latest()
             ->get();
 
-        return view('categorias.index', compact('categorias'));
+        return view('categoria.index', compact('categoria'));
     }
 
     public function create()
     {
-        return view('categorias.create');
+        return view('categoria.create');
     }
 
     public function store(Request $request)
@@ -30,13 +30,13 @@ class CategoriaController extends Controller
         Categoria::create($dados);
 
         return redirect()
-            ->route('categorias.index')
+            ->route('categoria.index')
             ->with('success', 'Curso criado com sucesso.');
     }
 
     public function edit(Categoria $categoria)
     {
-        return view('categorias.edit', compact('categoria'));
+        return view('categoria.edit', compact('categoria'));
     }
 
     public function update(Request $request, Categoria $categoria)
@@ -49,7 +49,7 @@ class CategoriaController extends Controller
         $categoria->update($dados);
 
         return redirect()
-            ->route('categorias.index')
+            ->route('categoria.index')
             ->with('success', 'Curso atualizado com sucesso.');
     }
 
@@ -58,7 +58,7 @@ class CategoriaController extends Controller
         $categoria->delete();
 
         return redirect()
-            ->route('categorias.index')
+            ->route('categoria.index')
             ->with('success', 'Curso removido com sucesso.');
     }
 }

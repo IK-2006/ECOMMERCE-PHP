@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Categorias')
+@section('title', 'Categoria')
 
 @section('content')
-    <h1>Lista de Categorias</h1>
+    <h1>Lista de Categoria</h1>
 
     <div class="actions">
-        <a href="{{ route('categorias.create') }}" class="btn">Nova categoria</a>
+        <a href="{{ route('categoria.create') }}" class="btn">Nova categoria</a>
     </div>
 
-    @if ($categorias->isEmpty())
+    @if ($categoria->isEmpty())
         <p>Nenhuma categoria cadastrado ainda.</p>
     @else
         <table>
@@ -21,14 +21,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categorias as $categoria)
+                @foreach ($categoria as $categoria)
                     <tr>
                         <td>{{ $categoria->nome }}</td>
                         <td>{{ $categoria->created_at->format('d/m/Y H:i') }}</td>
                         <td>
-                            <a href="{{ route('categorias.edit', $categoria) }}" class="btn btn-warning">Editar</a>
+                            <a href="{{ route('categoria.edit', $categoria) }}" class="btn btn-warning">Editar</a>
                             <form
-                                action="{{ route('categorias.destroy', $categoria) }}"
+                                action="{{ route('categoria.destroy', $categoria) }}"
                                 method="POST"
                                 class="inline-form"
                                 onsubmit="return confirm('Deseja excluir este categoria?');"
