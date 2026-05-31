@@ -3,6 +3,7 @@
 use App\Http\Middleware\EnsureTeamMembership;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\FornecedorController;
+use App\Http\Controllers\ProdutoController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -32,5 +33,13 @@ Route::resource('categoria', CategoriaController::class);
  });
 
 Route::resource('fornecedor', FornecedorController::class);
+
+
+
+ Route::get('/produto', function () {
+     return redirect()->route('produto.index');
+ });
+
+Route::resource('produto', ProdutoController::class);
 
 require __DIR__.'/settings.php';

@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produto;
 use App\Models\Fornecedor;
+use App\Http\Controllers\ProdutoController;
+use App\Models\Produto;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
 class ProdutoController extends Controller
 {
     public function index()
-    {
-        $produto = Produto::query()
-            ->with(['fornecedor'])
-            ->latest()
-            ->get();
+{
+    // Mudamos de $produto para $produtos (plural)
+    $produtos = Produto::query()
+        ->with(['fornecedor'])
+        ->latest()
+        ->get();
 
-        return view('produto.index', compact('produto'));
-    }
+    // Mudamos o compact para enviar 'produtos' (plural)
+    return view('produto.index', compact('produtos'));
+}
 
     public function create()
     {
@@ -60,43 +62,36 @@ class ProdutoController extends Controller
         $produto->delete();
 
         return redirect()
-            ->route('produtos.index')
+            ->route('produto.index')
             ->with('success', 'produto removida com sucesso.');
     }
 
     private function formOptions(): array
     {
         return [
-            'fornecedor' => Aluno::query()->orderBy('nome')->get(),
+            'fornecedor' => Fornecedor::query()->orderBy('nome')->get()
+        
         ];
     }
 
-    private function validateproduto(Request $request, ?Produto $produto = null): array
-    {
-        return $request->validate(
-            [
-                'fornecedor' => ['required', 'exists:fornecedor,id'],
-                [
-                    Rule::unique('produto')
-                        ->where('fornecedor_id', $request->input('fornecedor_id'))
-                        ->ignore($produto),
-                ],
-                'data_produto' => ['required', 'date'],
-                'status' => ['required', 'in:ativa,trancada,concluida'],
-            ],
-            [
-                'fornecedor_id.required' => 'Selecione um aluno.',
-                'fornecedor_id.exists' => 'O aluno selecionado nao foi encontrado.',
-                'curso_id.required' => 'Selecione um curso.',
-                'curso_id.exists' => 'O curso selecionado nao foi encontrado.',
-                'disciplina_id.required' => 'Selecione uma disciplina.',
-                'disciplina_id.exists' => 'A disciplina selecionada nao foi encontrada.',
-                'disciplina_id.unique' => 'Este aluno ja esta produtodo nesta disciplina para este curso.',
-                'data_produto.required' => 'Informe a data da produto.',
-                'data_produto.date' => 'Informe uma data de produto valida.',
-                'status.required' => 'Selecione o status.',
-                'status.in' => 'O status selecionado e invalido.',
-            ]
-        );
-    }
+   private function validateproduto(Request $request, ?Produto $produto = null): array
+{
+    return $request->validate(
+        [
+            'nome' => ['required', 'string', 'max:255'],
+            'quantidade' => ['required', 'integer'],
+            'preco' => ['required', 'numeric'],
+            'marca' => ['required', 'string', 'max:255'],
+            'tamanho' => ['required', 'string', 'max:255'],
+            // Usando o padrão do Laravel (nome_id)
+            'fornecedor_id' => ['required', 'exists:fornecedores,id'], 
+        ],
+        [
+            'nome.required' => 'O nome do produto é obrigatório.',
+            'preco.required' => 'Informe o preço.',
+            'fornecedor_id.required' => 'Informe o ID do Fornecedor.',
+            'fornecedor_id.exists' => 'Este Fornecedor não existe no banco de dados.',
+        ]
+    );
+}
 }
