@@ -1,35 +1,21 @@
 @csrf
 
-<label for="nome">Nome Fornecedor</label>
-<input
-    type="text"
-    id="nome"
-    name="nome"
-    {{-- Old mantem o que foi digitado quando ocorrer erro (Não obrigatório) --}}
-    value="{{ old('nome', $fonecedor->nome ?? '') }}"
-    required
->
+<div>
+    <label for="nome" class="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-200">Nome Fornecedor</label>
+    <input type="text" id="nome" name="nome" value="{{ old('nome', $fornecedor->nome ?? '') }}" required class="block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-xs outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-400 dark:focus:ring-zinc-800">
+</div>
 
-<label for="telefone">Telefone Fornecedor</label>
-<input
-    type="int"
-    id="telefone"
-    name="telefone"
-    {{-- Old mantem o que foi digitado quando ocorrer erro (Não obrigatório) --}}
-    value="{{ old('telefone', $fornecedor->telefone ?? '') }}"
-    required
->
+<div>
+    <label for="telefone" class="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-200">Telefone Fornecedor</label>
+    <input type="text" id="telefone" name="telefone" value="{{ old('telefone', $fornecedor->telefone ?? '') }}" required class="block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-xs outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-400 dark:focus:ring-zinc-800">
+</div>
 
-<label for="endereco">Endereço Fornecedor</label>
-<input
-    type="text"
-    id="endereco"
-    name="endereco"
-    {{-- Old mantem o que foi digitado quando ocorrer erro (Não obrigatório) --}}
-    value="{{ old('endereco', $fornecedor->endereco ?? '') }}"
-    required
->
+<div>
+    <label for="endereco" class="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-200">Endereco Fornecedor</label>
+    <input type="text" id="endereco" name="endereco" value="{{ old('endereco', $fornecedor->endereco ?? '') }}" required class="block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-xs outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-400 dark:focus:ring-zinc-800">
+</div>
 
-
-<button type="submit" class="btn">{{ $buttonText ?? 'Salvar' }}</button>
-<a href="{{ route('fornecedor.index') }}" style="margin-left: 8px;">Cancelar</a>
+<div class="flex items-center gap-3">
+    <flux:button variant="primary" type="submit">{{ $buttonText ?? 'Salvar' }}</flux:button>
+    <flux:button :href="route('fornecedor.index')" wire:navigate>{{ __('Cancelar') }}</flux:button>
+</div>
