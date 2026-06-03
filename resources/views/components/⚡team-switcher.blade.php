@@ -106,7 +106,7 @@ new class extends Component {
             <flux:icon name="users" class="hidden size-4 in-data-flux-sidebar-collapsed-desktop:block" />
             <span class="truncate font-semibold in-data-flux-sidebar-collapsed-desktop:hidden">{{ $this->currentTeam()['name'] ?? __('Select team') }}</span>
             <flux:icon
-                name="chevrons-up-down"
+                name="chevron-up-down"
                 variant="micro"
                 class="ms-auto size-4 in-data-flux-sidebar-collapsed-desktop:hidden"
             />
