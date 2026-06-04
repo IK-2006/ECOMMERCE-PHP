@@ -20,9 +20,8 @@ return new class extends Migration
             $table->string('nome');
             $table->string('tamanho');
             $table->string('marca');
+            $table->string('imagem')->nullabel();
             $table->foreign('fornecedor_id')->references('id')->on('fornecedores');
-
-
         });
     }
 

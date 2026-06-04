@@ -50,7 +50,7 @@ class CategoriaController extends Controller
 
         return redirect()
             ->route('categoria.index')
-            ->with('success', 'Curso atualizado com sucesso.');
+            ->with('success', 'Categoria atualizado com sucesso.');
     }
 
     public function destroy(Categoria $categoria)
@@ -59,6 +59,6 @@ class CategoriaController extends Controller
 
         return redirect()
             ->route('categoria.index')
-            ->with('success', 'Curso removido com sucesso.');
+            ->with('success', 'Categoria removido com sucesso.');
     }
 }
