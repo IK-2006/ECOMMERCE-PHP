@@ -15,43 +15,61 @@
             @if ($produtos->isEmpty())
                 <div class="p-6 text-sm text-zinc-500">{{ __('Nenhum produto cadastrado ainda.') }}</div>
             @else
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm">
-                        <thead class="border-b border-zinc-200 bg-zinc-50 text-xs uppercase text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
-                            <tr>
-                                <th class="px-4 py-3">{{ __('Nome') }}</th>
-                                <th class="px-4 py-3">{{ __('Quantidade') }}</th>
-                                <th class="px-4 py-3">{{ __('Preco') }}</th>
-                                <th class="px-4 py-3">{{ __('Tamanho') }}</th>
-                                <th class="px-4 py-3">{{ __('Marca') }}</th>
-                                <th class="px-4 py-3">{{ __('Fornecedor') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('Acoes') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
-                            @foreach ($produtos as $produto)
-                                <tr>
-                                    <td class="px-4 py-3 font-medium">{{ $produto->nome }}</td>
-                                    <td class="px-4 py-3 text-zinc-500">{{ $produto->quantidade }}</td>
-                                    <td class="px-4 py-3 text-zinc-500">{{ $produto->preco }}</td>
-                                    <td class="px-4 py-3 text-zinc-500">{{ $produto->tamanho }}</td>
-                                    <td class="px-4 py-3 text-zinc-500">{{ $produto->marca }}</td>
-                                    <td class="px-4 py-3 text-zinc-500">{{ $produto->fornecedor->nome ?? 'N/A' }}</td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex justify-end gap-2">
-                                            <flux:button size="sm" icon="pencil" :href="route('produto.edit', $produto)" wire:navigate>{{ __('Editar') }}</flux:button>
-                                            <form action="{{ route('produto.destroy', $produto) }}" method="POST" onsubmit="return confirm('Deseja excluir este produto?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <flux:button size="sm" variant="danger" icon="trash" type="submit">{{ __('Excluir') }}</flux:button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+    @foreach ($produtos as $produto)
+        <div class="overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+
+            <div class="aspect-square overflow-hidden bg-gray-100">
+                <img
+                    src="{{ asset('storage/' . $produto->imagem) }}"
+                    alt="{{ $produto->nome }}"
+                    class="h-full w-full object-cover transition duration-500 hover:scale-110"
+                >
+            </div>
+
+            <div class="p-4">
+                <p class="text-xs uppercase tracking-wider text-gray-500">
+                    {{ $produto->marca }}
+                </p>
+
+                <h3 class="mt-1 text-lg font-semibold text-gray-900">
+                    {{ $produto->nome }}
+                </h3>
+
+                <p class="mt-1 text-sm text-gray-500">
+                    Tamanho: {{ $produto->tamanho }}
+                </p>
+
+                <div class="mt-3 flex items-center justify-between">
+                    <span class="text-xl font-bold text-black">
+                        R$ {{ number_format($produto->preco, 2, ',', '.') }}
+                    </span>
+
+                    <div class="flex gap-2">
+                        <a href="{{ route('produto.edit', $produto) }}"
+                           class="rounded-lg bg-black px-3 py-2 text-white text-sm">
+                            Editar
+                        </a>
+
+                        <form action="{{ route('produto.destroy', $produto) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                onclick="return confirm('Deseja excluir este produto?')"
+                                class="rounded-lg bg-red-600 px-3 py-2 text-white text-sm">
+                                Excluir
+                            </button>
+                        </form>
+                    </div>
                 </div>
+            </div>
+
+        </div>
+    @endforeach
+
+</div>
             @endif
         </div>
     </div>

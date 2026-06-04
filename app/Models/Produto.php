@@ -13,7 +13,8 @@ class Produto extends Model
         'quantidade',
         'nome',
         'tamanho',
-        'marca'
+        'marca',
+        'imagem'
     ];
 
    
