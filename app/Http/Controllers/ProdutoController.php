@@ -73,14 +73,15 @@ class ProdutoController extends Controller
     }
 
     private function formOptions(): array
-    {
-        return [
-            'fornecedor' => Fornecedor::query()->orderBy('nome')->get()
-        
-        ];
-    }
+{
+    return [
+        'fornecedores' => Fornecedor::query()
+            ->orderBy('nome')
+            ->get(),
+    ];
+}
 
-   private function validateproduto(Request $request, ?Produto $produto = null): array
+   private function validateProduto(Request $request, ?Produto $produto = null): array
 {
     return $request->validate(
         [

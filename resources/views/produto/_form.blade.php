@@ -27,8 +27,27 @@
     </div>
 
     <div class="md:col-span-2">
-        <label for="fornecedor_id" class="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-200">Fornecedor ID</label>
-        <input type="number" id="fornecedor_id" name="fornecedor_id" value="{{ old('fornecedor_id', $produto->fornecedor_id ?? '') }}" required class="block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-xs outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-400 dark:focus:ring-zinc-800">
+    <label for="fornecedor_id" class="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-200">
+        Fornecedor
+    </label>
+
+    <select
+        id="fornecedor_id"
+        name="fornecedor_id"
+        required
+        class="block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-xs outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
+    >
+        <option value="">Selecione um fornecedor</option>
+
+        @foreach($fornecedores as $fornecedor)
+            <option
+                value="{{ $fornecedor->id }}"
+                @selected(old('fornecedor_id', $produto->fornecedor_id ?? '') == $fornecedor->id)
+            >
+                {{ $fornecedor->nome }}
+            </option>
+        @endforeach
+    </select>
     </div>
 
      <div>
