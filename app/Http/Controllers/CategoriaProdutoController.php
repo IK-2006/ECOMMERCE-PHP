@@ -22,7 +22,10 @@ class CategoriaProdutoController extends Controller
 
     public function create()
     {
-        return view('categoriaprodutos.create', $this->formOptions());
+        $produtos = Produto::all();
+        $categorias = Categoria::all();
+
+        return view('categoriaprodutos.create', compact('produtos', 'categorias'));
     }
 
     public function store(Request $request)
@@ -64,27 +67,27 @@ class CategoriaProdutoController extends Controller
             ->with('success', 'Categoria do produto removida com sucesso.');
     }
 
-    private function formOptions(): array
+   private function formOptions(): array
     {
-        return [
-            'categoria' => Categoria::query()->orderBy('nome')->get(),
-            'produto' => Produto::query()->orderBy('nome')->get(),
-        ];
+    return [
+        'categorias' => Categoria::query()->orderBy('nome')->get(),
+        'produtos' => Produto::query()->orderBy('nome')->get(),
+    ];
     }
 
-    private function validateCategoriaProduto(Request $request, ?CategoriaProduto $categoriaproduto = null): array
+   private function validateCategoriaProduto(Request $request, ?CategoriaProduto $categoriaproduto = null): array
     {
-        return $request->validate(
-            [
-                'categoria_id' => ['required', 'exists:categoria,id'],
-                'produto_id' => ['required', 'exists:produto,id'],
-            ],
-            [
-                'categoria_id.required' => 'Selecione uma categoria.',
-                'categoria_id.exists' => 'A categoria selecionado nao foi encontrado.',
-                'produto_id.required' => 'Selecione um produto.',
-                'produto_id.exists' => 'O produto selecionado nao foi encontrado.',
-            ]
-        );
-    }
+    return $request->validate(
+        [
+            'categoria_id' => ['required', 'exists:categorias,id'],
+            'produto_id' => ['required', 'exists:produtos,id'],
+        ],
+        [
+            'categoria_id.required' => 'Selecione uma categoria.',
+            'categoria_id.exists' => 'A categoria selecionada não foi encontrada.',
+            'produto_id.required' => 'Selecione um produto.',
+            'produto_id.exists' => 'O produto selecionado não foi encontrado.',
+        ]
+    );
+    }   
 }

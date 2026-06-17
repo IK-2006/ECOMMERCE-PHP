@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Produto;
 use App\Models\Fornecedor;
 
 use Illuminate\Http\Request;
@@ -24,9 +25,9 @@ class FornecedorController extends Controller
     public function store(Request $request)
     {
         $dados = $request->validate([
-            'nome' => ['required', 'string', 'max:255'],
+            'nome' => ['required', 'string'],
             'telefone' => ['required', 'int'],
-            'endereco' => ['required', 'string', 'max: 255']
+            'endereco' => ['required', 'string']
         ]);
 
         Fornecedor::create($dados);
@@ -44,9 +45,9 @@ class FornecedorController extends Controller
     public function update(Request $request, Fornecedor $fornecedor)
     {
         $dados = $request->validate([
-            'nome' => ['required', 'string', 'max:255'],
-            'telefone' => ['required', 'int', 'max: 20'],
-            'endereco' => ['required', 'string', 'max: 255']
+            'nome' => ['required', 'string'],
+            'telefone' => ['required', 'int'],
+            'endereco' => ['required', 'string']
     
         ]);
 
@@ -58,11 +59,19 @@ class FornecedorController extends Controller
     }
 
     public function destroy(Fornecedor $fornecedor)
-    {
-        $fornecedor->delete();
+{
+    $produtosVinculados = Produto::where('fornecedor_id', $fornecedor->id)->count();
 
+    if ($produtosVinculados > 0) {
         return redirect()
             ->route('fornecedor.index')
-            ->with('success', 'Fornecedor removido com sucesso.');
+            ->with('error', 'Não é possível excluir: existem produtos no catálogo vinculados a este fornecedor.');
     }
+
+    $fornecedor->delete();
+
+    return redirect()
+        ->route('fornecedor.index')
+        ->with('success', 'Fornecedor removido com sucesso.');
+}
 }

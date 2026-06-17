@@ -1,4 +1,4 @@
-<x-layouts::app.sidebar :title="__('Categoria Produto')">
+<x-layouts.app.sidebar :title="__('Categoria Produto')">
     <div class="mx-auto flex w-full max-w-7xl flex-col gap-6">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -30,7 +30,6 @@
                             <tr>
                                 <th class="px-4 py-3">Categoria</th>
                                 <th class="px-4 py-3">Produto</th>
-                                <th class="px-4 py-3 text-right">Ações</th>
                             </tr>
                         </thead>
 
@@ -83,4 +82,4 @@
             @endif
         </div>
     </div>
-</x-layouts::app.sidebar>
+</x-layouts.app.sidebar>   
