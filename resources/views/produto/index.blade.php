@@ -25,7 +25,7 @@
                                 <th class="px-4 py-3">{{ __('Tamanho') }}</th>
                                 <th class="px-4 py-3">{{ __('Marca') }}</th>
                                 <th class="px-4 py-3">{{ __('Fornecedor') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('Acoes') }}</th>
+                                <th class="px-4 py-3 text-right">{{ __('Imagem') }}</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
@@ -37,6 +37,13 @@
                                     <td class="px-4 py-3 text-zinc-500">{{ $produto->tamanho }}</td>
                                     <td class="px-4 py-3 text-zinc-500">{{ $produto->marca }}</td>
                                     <td class="px-4 py-3 text-zinc-500">{{ $produto->fornecedor->nome ?? 'N/A' }}</td>
+                                        <td class="px-4 py-3 text-right">
+                                            @if ($produto->imagem)
+                                                <img src="{{ asset('storage/' . $produto->imagem) }}" alt="{{ $produto->nome }}" class="h-16 w-16 object-cover rounded">
+                                            @else
+                                                <span class="text-zinc-500">{{ __('Sem imagem') }}</span>
+                                            @endif
+                                    </td>
                                     <td class="px-4 py-3">
                                         <div class="flex justify-end gap-2">
                                             <flux:button size="sm" icon="pencil" :href="route('produto.edit', $produto)" wire:navigate>{{ __('Editar') }}</flux:button>
