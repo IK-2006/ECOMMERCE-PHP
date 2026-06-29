@@ -53,12 +53,16 @@ class CategoriaController extends Controller
             ->with('success', 'Categoria atualizado com sucesso.');
     }
 
-    public function destroy(Categoria $categoria)
+   public function destroy(Categoria $categoria)
     {
-        $categoria->delete();
+    $categoria->produtos()->detach();
 
-        return redirect()
-            ->route('categoria.index')
-            ->with('success', 'Categoria removido com sucesso.');
+    $categoria->delete();
+
+    return redirect()
+        ->route('categoria.index')
+        ->with('success', 'Categoria removida com sucesso.');
     }
+
+    
 }

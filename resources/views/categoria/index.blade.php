@@ -1,50 +1,177 @@
 <x-layouts::app.sidebar :title="__('Categorias')">
-    <div class="mx-auto flex w-full max-w-7xl flex-col gap-6">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+<div class="mx-auto max-w-7xl space-y-8">
+
+    <!-- Cabeçalho -->
+
+    <div class="rounded-3xl bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-600 p-8 shadow-xl">
+
+        <div class="flex items-center justify-between">
+
             <div>
-                <flux:heading size="xl">{{ __('Categorias') }}</flux:heading>
-                <flux:subheading>{{ __('Organize os produtos por categoria') }}</flux:subheading>
+
+                <h1 class="text-4xl font-bold text-white">
+                    Categorias
+                </h1>
+
+                <p class="mt-2 text-blue-100">
+                    Organize todos os produtos da sua loja.
+                </p>
+
             </div>
 
-            <flux:button variant="primary" icon="plus" :href="route('categoria.create')" wire:navigate>
-                {{ __('Nova categoria') }}
-            </flux:button>
+            <a href="{{ route('categoria.create') }}"
+               class="rounded-xl bg-white px-6 py-3 font-semibold text-indigo-700 transition hover:scale-105">
+
+                + Nova Categoria
+
+            </a>
+
         </div>
 
-        <div class="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-xs dark:border-zinc-700 dark:bg-zinc-900">
-            @if ($categoria->isEmpty())
-                <div class="p-6 text-sm text-zinc-500">{{ __('Nenhuma categoria cadastrada ainda.') }}</div>
-            @else
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm">
-                        <thead class="border-b border-zinc-200 bg-zinc-50 text-xs uppercase text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
-                            <tr>
-                                <th class="px-4 py-3">{{ __('Nome') }}</th>
-                                <th class="px-4 py-3">{{ __('Criado em') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('Acoes') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
-                            @foreach ($categoria as $item)
-                                <tr>
-                                    <td class="px-4 py-3 font-medium">{{ $item->nome }}</td>
-                                    <td class="px-4 py-3 text-zinc-500">{{ $item->created_at->format('d/m/Y H:i') }}</td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex justify-end gap-2">
-                                            <flux:button size="sm" icon="pencil" :href="route('categoria.edit', $item)" wire:navigate>{{ __('Editar') }}</flux:button>
-                                            <form action="{{ route('categoria.destroy', $item) }}" method="POST" onsubmit="return confirm('Deseja excluir esta categoria?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <flux:button size="sm" variant="danger" icon="trash" type="submit">{{ __('Excluir') }}</flux:button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
-        </div>
     </div>
+
+    <!-- Card -->
+
+    <div class="rounded-3xl border border-zinc-800 bg-zinc-900 shadow-xl">
+
+        <div class="flex items-center justify-between border-b border-zinc-800 p-6">
+
+            <div>
+
+                <h2 class="text-xl font-bold text-white">
+
+                    Lista de Categorias
+
+                </h2>
+
+                <p class="text-sm text-zinc-400">
+
+                    {{ $categoria->count() }} categoria(s) cadastrada(s)
+
+                </p>
+
+            </div>
+
+        </div>
+
+        @if($categoria->isEmpty())
+
+            <div class="py-20 text-center">
+
+                <div class="text-6xl">
+
+                    📂
+
+                </div>
+
+                <h2 class="mt-6 text-2xl font-bold text-white">
+
+                    Nenhuma categoria encontrada
+
+                </h2>
+
+                <p class="mt-3 text-zinc-400">
+
+                    Clique em "Nova Categoria" para começar.
+
+                </p>
+
+            </div>
+
+        @else
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full">
+
+                <thead class="border-b border-zinc-800 bg-zinc-950">
+
+                    <tr>
+
+                        <th class="px-8 py-5 text-left text-xs uppercase tracking-wider text-zinc-400">
+                            Nome
+                        </th>
+
+                        <th class="px-8 py-5 text-left text-xs uppercase tracking-wider text-zinc-400">
+                            Criado em
+                        </th>
+
+                        <th class="px-8 py-5 text-right text-xs uppercase tracking-wider text-zinc-400">
+                            Ações
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach($categoria as $item)
+
+                    <tr class="border-b border-zinc-800 transition hover:bg-zinc-800/40">
+
+                        <td class="px-8 py-6">
+
+                            <div class="font-semibold text-white">
+
+                                {{ $item->nome }}
+
+                            </div>
+
+                        </td>
+
+                        <td class="px-8 py-6 text-zinc-400">
+
+                            {{ $item->created_at->format('d/m/Y H:i') }}
+
+                        </td>
+
+                        <td class="px-8 py-6">
+
+                            <div class="flex justify-end gap-3">
+
+                                <a href="{{ route('categoria.edit',$item) }}"
+                                   class="rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-400">
+
+                                    Editar
+
+                                </a>
+
+                                <form action="{{ route('categoria.destroy',$item) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Deseja excluir esta categoria?')">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-500">
+
+                                        Excluir
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    @endforeach
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        @endif
+
+    </div>
+
+</div>
+
 </x-layouts::app.sidebar>
