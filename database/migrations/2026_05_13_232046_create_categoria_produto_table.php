@@ -28,15 +28,6 @@ return new class extends Migration
           ->references('id')
           ->on('categorias')
           ->onDelete('cascade');
-    }
-    );
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('_categoria_produto');
+        });
     }
 };

@@ -17,7 +17,15 @@ class Produto extends Model
         'imagem'
     ];
 
-   
+    public function categorias()
+    {
+        return $this->belongsToMany(
+            Categoria::class,
+            '_categoria_produto',
+            'produto_id',
+            'categoria_id'
+        );
+    }
 
     public function fornecedor(): BelongsTo
     {
