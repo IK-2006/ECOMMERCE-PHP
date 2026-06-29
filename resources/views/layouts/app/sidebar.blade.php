@@ -23,14 +23,8 @@
                     <flux:sidebar.item icon="shopping-bag" :href="route('produto.index')" :current="request()->routeIs('produto.*')" wire:navigate>
                         {{ __('Produtos') }}
                     </flux:sidebar.item>
-                    
-                    <flux:sidebar.item icon="eye" :href="route('userview.index')" :current="request()->routeIs('userview.*')" wire:navigate>
-                        {{ __('Visão do Cliente') }}
-                    </flux:sidebar.item>
 
-                    <flux:sidebar.item icon="cart" :href="route('userview.carrinho.index')" :current="request()->routeIs('carrinho.*')" wire:navigate>
-                        {{ __('Carrinho') }}
-                    </flux:sidebar.item>
+            
 
                     <flux:sidebar.item icon="truck" :href="route('fornecedor.index')" :current="request()->routeIs('fornecedor.*')" wire:navigate>
                         {{ __('Fornecedores') }}
