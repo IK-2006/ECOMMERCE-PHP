@@ -6,9 +6,11 @@
         </div>
 
         <div class="rounded-lg border border-zinc-200 bg-white p-6 shadow-xs dark:border-zinc-700 dark:bg-zinc-900">
-            <form action="{{ route('produto.store') }}" method="POST" class="space-y-5">
+            <form action="{{ route('produto.store') }}" method="POST"  enctype="multipart/form-data" class="space-y-5">
                 @include('produto._form', ['buttonText' => 'Criar produto'])
             </form>
         </div>
     </div>
 </x-layouts::app.sidebar>
+
+

@@ -31,6 +31,12 @@ class ProdutoController extends Controller
     {
         $dados = $this->validateProduto($request);
 
+        if ($request->hasFile('imagem')) {
+        // Salva em storage/app/public/produtos e retorna o caminho relativo
+        $caminho = $request->file('imagem')->store('produtos', 'public');
+        $dados['imagem'] = $caminho;
+    }
+
         Produto::create($dados);
 
         return redirect()
@@ -84,8 +90,10 @@ class ProdutoController extends Controller
             'preco' => ['required', 'numeric'],
             'marca' => ['required', 'string', 'max:255'],
             'tamanho' => ['required', 'string', 'max:255'],
+            'imagem' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             // Usando o padrão do Laravel (nome_id)
             'fornecedor_id' => ['required', 'exists:fornecedores,id'], 
+            
         ],
         [
             'nome.required' => 'O nome do produto é obrigatório.',
