@@ -1,52 +1,187 @@
 <x-layouts::app.sidebar :title="__('Fornecedores')">
-    <div class="mx-auto flex w-full max-w-7xl flex-col gap-6">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+<div class="mx-auto max-w-7xl space-y-8">
+
+    <!-- Cabeçalho -->
+    <div class="rounded-3xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 p-8 shadow-xl">
+
+        <div class="flex items-center justify-between">
+
             <div>
-                <flux:heading size="xl">{{ __('Fornecedores') }}</flux:heading>
-                <flux:subheading>{{ __('Gerencie os fornecedores do ecommerce') }}</flux:subheading>
+
+                <h1 class="text-4xl font-bold text-white">
+                    Fornecedores
+                </h1>
+
+                <p class="mt-2 text-emerald-100">
+                    Gerencie todos os fornecedores do seu e-commerce.
+                </p>
+
             </div>
 
-            <flux:button variant="primary" icon="plus" :href="route('fornecedor.create')" wire:navigate>
-                {{ __('Novo fornecedor') }}
+            <flux:button
+                variant="primary"
+                icon="plus"
+                :href="route('fornecedor.create')"
+                wire:navigate
+                class="!bg-white !text-emerald-700 hover:scale-105 transition">
+
+                Novo fornecedor
+
             </flux:button>
+
         </div>
 
-        <div class="overflow-hidden rounded-lg border border-zinc-200 bg-white shadow-xs dark:border-zinc-700 dark:bg-zinc-900">
-            @if ($fornecedores->isEmpty())
-                <div class="p-6 text-sm text-zinc-500">{{ __('Nenhum fornecedor cadastrado ainda.') }}</div>
-            @else
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm">
-                        <thead class="border-b border-zinc-200 bg-zinc-50 text-xs uppercase text-zinc-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400">
-                            <tr>
-                                <th class="px-4 py-3">{{ __('Nome') }}</th>
-                                <th class="px-4 py-3">{{ __('Telefone') }}</th>
-                                <th class="px-4 py-3">{{ __('Endereco') }}</th>
-                                <th class="px-4 py-3 text-right">{{ __('Acoes') }}</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
-                            @foreach ($fornecedores as $fornecedor)
-                                <tr>
-                                    <td class="px-4 py-3 font-medium">{{ $fornecedor->nome }}</td>
-                                    <td class="px-4 py-3 text-zinc-500">{{ $fornecedor->telefone }}</td>
-                                    <td class="px-4 py-3 text-zinc-500">{{ $fornecedor->endereco }}</td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex justify-end gap-2">
-                                            <flux:button size="sm" icon="pencil" :href="route('fornecedor.edit', $fornecedor)" wire:navigate>{{ __('Editar') }}</flux:button>
-                                            <form action="{{ route('fornecedor.destroy', $fornecedor) }}" method="POST" onsubmit="return confirm('Deseja excluir este fornecedor?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <flux:button size="sm" variant="danger" icon="trash" type="submit">{{ __('Excluir') }}</flux:button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
-        </div>
     </div>
+
+    <!-- Card -->
+    <div class="overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900 shadow-xl">
+
+        <div class="flex items-center justify-between border-b border-zinc-800 p-6">
+
+            <div>
+
+                <h2 class="text-xl font-bold text-white">
+                    Lista de Fornecedores
+                </h2>
+
+                <p class="mt-1 text-sm text-zinc-400">
+                    {{ $fornecedores->count() }} fornecedor(es) cadastrado(s)
+                </p>
+
+            </div>
+
+        </div>
+
+        @if ($fornecedores->isEmpty())
+
+            <div class="py-20 text-center">
+
+                <div class="text-6xl">
+                    🚚
+                </div>
+
+                <h2 class="mt-6 text-2xl font-bold text-white">
+                    Nenhum fornecedor encontrado
+                </h2>
+
+                <p class="mt-2 text-zinc-400">
+                    Cadastre seu primeiro fornecedor.
+                </p>
+
+            </div>
+
+        @else
+
+        <div class="overflow-x-auto">
+
+            <table class="w-full">
+
+                <thead class="border-b border-zinc-800 bg-zinc-950">
+
+                    <tr>
+
+                        <th class="px-8 py-5 text-left text-xs uppercase tracking-wider text-zinc-400">
+                            Nome
+                        </th>
+
+                        <th class="px-8 py-5 text-left text-xs uppercase tracking-wider text-zinc-400">
+                            Telefone
+                        </th>
+
+                        <th class="px-8 py-5 text-left text-xs uppercase tracking-wider text-zinc-400">
+                            Endereço
+                        </th>
+
+                        <th class="px-8 py-5 text-right text-xs uppercase tracking-wider text-zinc-400">
+                            Ações
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach ($fornecedores as $fornecedor)
+
+                        <tr class="border-b border-zinc-800 transition hover:bg-zinc-800/40">
+
+                            <td class="px-8 py-6">
+
+                                <div class="font-semibold text-white">
+
+                                    {{ $fornecedor->nome }}
+
+                                </div>
+
+                            </td>
+
+                            <td class="px-8 py-6 text-zinc-400">
+
+                                {{ $fornecedor->telefone }}
+
+                            </td>
+
+                            <td class="px-8 py-6 text-zinc-400">
+
+                                {{ $fornecedor->endereco }}
+
+                            </td>
+
+                            <td class="px-8 py-6">
+
+                                <div class="flex justify-end gap-3">
+
+                                    <flux:button
+                                        size="sm"
+                                        icon="pencil"
+                                        :href="route('fornecedor.edit',$fornecedor)"
+                                        wire:navigate
+                                        class="!bg-amber-500 hover:!bg-amber-400">
+
+                                        Editar
+
+                                    </flux:button>
+
+                                    <form
+                                        action="{{ route('fornecedor.destroy',$fornecedor) }}"
+                                        method="POST"
+                                        onsubmit="return confirm('Deseja excluir este fornecedor?')">
+
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <flux:button
+                                            size="sm"
+                                            variant="danger"
+                                            icon="trash"
+                                            type="submit">
+
+                                            Excluir
+
+                                        </flux:button>
+
+                                    </form>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    @endforeach
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        @endif
+
+    </div>
+
+</div>
+
 </x-layouts::app.sidebar>

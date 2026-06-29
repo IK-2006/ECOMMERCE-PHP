@@ -1,6 +1,17 @@
 @csrf
 
 <div class="grid gap-5 md:grid-cols-2">
+    <div>
+    <label>Imagem do Produto</label>
+
+    <input
+        type="file"
+        name="imagem"
+        accept="image/*"
+        class="block w-full rounded-lg border"
+    >
+    </div>
+    
     <div class="md:col-span-2">
         <label for="nome" class="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-200">Nome Produto</label>
         <input type="text" id="nome" name="nome" value="{{ old('nome', $produto->nome ?? '') }}" required class="block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 shadow-xs outline-none transition focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:focus:border-zinc-400 dark:focus:ring-zinc-800">
